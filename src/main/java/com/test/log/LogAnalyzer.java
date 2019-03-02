@@ -9,7 +9,7 @@ import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingProcessingTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 
 public class LogAnalyzer {
 
@@ -17,7 +17,7 @@ public class LogAnalyzer {
 		Properties props = new Properties();
 		props.setProperty("bootstrap.servers", "10.7.30.22:9092");
 		props.setProperty("group.id", "log-analyzer");
-		FlinkKafkaConsumer011<String> consumer = new FlinkKafkaConsumer011<>("test", new SimpleStringSchema(), props);
+		FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>("test", new SimpleStringSchema(), props);
 		consumer.setStartFromEarliest();
 
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();

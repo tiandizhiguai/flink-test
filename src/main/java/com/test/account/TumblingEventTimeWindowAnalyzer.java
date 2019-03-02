@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.streaming.api.TimeCharacteristic;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
+import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.TumblingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
@@ -23,7 +23,7 @@ public class TumblingEventTimeWindowAnalyzer {
 		properties.put("namesrvAddr", "rocketmq-server-vip:9876");
 		List<String> topics = new ArrayList<>();
 		topics.add("account-acd");
-		SingleOutputStreamOperator<Tuple2<String, BigDecimal>> datas = env.addSource(new RocketmqConsumer(topics, properties))
+		DataStream<Tuple2<String, BigDecimal>> datas = env.addSource(new RocketmqConsumer(topics, properties))
 				.flatMap(new AccountingInfoParser())
 				.assignTimestampsAndWatermarks(new AccountingInfoTimestampExtractor(Time.seconds(60)))
 				.keyBy(new AccountingInfoKeySelector())
