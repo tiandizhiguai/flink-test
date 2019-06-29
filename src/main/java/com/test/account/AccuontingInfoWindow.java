@@ -9,7 +9,7 @@ import org.apache.flink.util.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AccuontingInfoWindowFunction implements WindowFunction<AccountingInfo, Tuple2<String, BigDecimal>, String, TimeWindow> {
+public class AccuontingInfoWindow implements WindowFunction<AccountingInfo, Tuple2<String, BigDecimal>, String, TimeWindow> {
 
 	private static final long serialVersionUID = -9163417231404559883L;
 

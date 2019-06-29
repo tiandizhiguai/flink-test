@@ -26,9 +26,9 @@ public class TumblingEventTimeWindowAnalyzer {
 		DataStream<Tuple2<String, BigDecimal>> datas = env.addSource(new RocketmqConsumer(topics, properties))
 				.flatMap(new AccountingInfoParser())
 				.assignTimestampsAndWatermarks(new AccountingInfoTimestampExtractor(Time.seconds(60)))
-				.keyBy(new AccountingInfoKeySelector())
+				.keyBy(new AccountingInfoKey())
 				.window(TumblingEventTimeWindows.of(Time.seconds(1)))
-				.process(new AccountingInfoProcessWindowFunction());
+				.process(new AccountingInfoProcessWindow());
 		datas.print();
 		env.execute("AccountAnalyzer");
 	}

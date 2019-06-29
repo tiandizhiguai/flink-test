@@ -51,9 +51,9 @@ public class UserEventAnalyzer {
 		FlinkKafkaConsumer<String> kafkaUserEventSource = new FlinkKafkaConsumer<>("input-event-topic", new SimpleStringSchema(), props);
 		kafkaUserEventSource.setStartFromEarliest();
 		KeyedStream<UserEvent, String> customerUserEventStream = env.addSource(kafkaUserEventSource)
-			.map(new UserMapFunction())
+			.map(new UserMap())
 			.assignTimestampsAndWatermarks(new UserWatermarkExtractor(Time.days(1000)))
-			.keyBy(new UserKeySelector());
+			.keyBy(new UserKey());
 		
 		FlinkKafkaConsumer<String> kafkaConfigEventSource = new FlinkKafkaConsumer<>("input-config-topic", new SimpleStringSchema(), props);
 		kafkaConfigEventSource.setStartFromEarliest();
@@ -63,11 +63,11 @@ public class UserEventAnalyzer {
 				new MapTypeInfo<>(String.class, UserEventContainer.class));
 		
 		BroadcastStream<Config> configBroadcastStream = env.addSource(kafkaConfigEventSource)
-			.map(new ConfigMapFunction())
+			.map(new ConfigMap())
 			.broadcast(configStateDescriptor);
 		
 		customerUserEventStream.connect(configBroadcastStream)
-			.process(new UserKeyedBroadcastProcessFunction(configStateDescriptor, userStateDescriptor))
+			.process(new UserKeyedBroadcastProcess(configStateDescriptor, userStateDescriptor))
 			.print();
 		
 		env.execute("UserEventAnalyzer");

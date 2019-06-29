@@ -14,7 +14,7 @@ import io.vertx.ext.asyncsql.AsyncSQLClient;
 import io.vertx.ext.asyncsql.MySQLClient;
 import io.vertx.ext.sql.SQLConnection;
 
-public class MySQLAsyncSink extends RichAsyncFunction<String, Protocol>{
+public class MySQLAsyncSource extends RichAsyncFunction<String, Protocol>{
 
 	private static final long serialVersionUID = 1L;
 
@@ -23,8 +23,8 @@ public class MySQLAsyncSink extends RichAsyncFunction<String, Protocol>{
 	@Override
 	public void open(Configuration parameters) throws Exception {
 		JsonObject config = new JsonObject();
-		config.put("host", "10.1.3.18").put("port", 8066).put("username", "admin").put("password", "test").put("database",
-				"user");
+		config.put("host", "10.23.3.18").put("port", 3306).put("username", "admin").put("password", "admin").put("database",
+				"admin");
 
 		VertxOptions vo = new VertxOptions();
 		vo.setEventLoopPoolSize(1);

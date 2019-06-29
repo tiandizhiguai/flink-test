@@ -4,15 +4,15 @@ import org.apache.flink.api.common.functions.MapFunction;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ConfigMapFunction implements MapFunction<String, Config> {
+public class UserMap implements MapFunction<String, UserEvent> {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final ObjectMapper mapper = new ObjectMapper();
 
 	@Override
-	public Config map(String value) throws Exception {
-		return mapper.readValue(value, Config.class);
+	public UserEvent map(String value) throws Exception {
+		return mapper.readValue(value, UserEvent.class);
 	}
 
 }

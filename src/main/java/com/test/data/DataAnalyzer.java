@@ -18,7 +18,7 @@ public class DataAnalyzer {
 		csvReader.ignoreInvalidLines()
 				.ignoreFirstLine()
 				.pojoType(DataInfo.class, fields)
-				.reduceGroup(new DataGroupReduceFunction())
+				.reduceGroup(new DataGroupReduce())
 				.writeAsCsv("D:\\数据分析\\20181102\\data99_结果.csv", WriteMode.OVERWRITE)
 				.setParallelism(1);
 		

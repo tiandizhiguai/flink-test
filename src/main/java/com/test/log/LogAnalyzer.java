@@ -26,7 +26,7 @@ public class LogAnalyzer {
 		SingleOutputStreamOperator<Tuple2<String, Integer>> classCount = env.addSource(consumer)
 				.flatMap(new LogSplitter())
 				.keyBy(new ClassKeySelector())
-				.window(TumblingProcessingTimeWindows.of(Time.seconds(5)))
+				.window(TumblingProcessingTimeWindows.of(Time.seconds(5), Time.hours(-8)))
 				.apply(new LogWindowFunction());
 
 		classCount.print();

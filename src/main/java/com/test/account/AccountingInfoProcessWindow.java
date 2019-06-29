@@ -11,11 +11,11 @@ import org.apache.flink.util.Collector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AccountingInfoProcessWindowFunction extends ProcessWindowFunction<AccountingInfo, Tuple2<String, BigDecimal>, String, TimeWindow> {
+public class AccountingInfoProcessWindow extends ProcessWindowFunction<AccountingInfo, Tuple2<String, BigDecimal>, String, TimeWindow> {
 
 	private static final long serialVersionUID = 7790420713942242032L;
 
-	private static final Logger logger = LoggerFactory.getLogger(AccountingInfoProcessWindowFunction.class);
+	private static final Logger logger = LoggerFactory.getLogger(AccountingInfoProcessWindow.class);
 
 	private static final SimpleDateFormat fomart = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

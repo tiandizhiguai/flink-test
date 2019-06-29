@@ -15,17 +15,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class UserKeyedBroadcastProcessFunction extends KeyedBroadcastProcessFunction<String, UserEvent, Config, EvaluatedResult> {
+public class UserKeyedBroadcastProcess extends KeyedBroadcastProcessFunction<String, UserEvent, Config, EvaluatedResult> {
 
 	private static final long serialVersionUID = -4635300979293211409L;
 
-	private static final Logger logger = LoggerFactory.getLogger(UserKeyedBroadcastProcessFunction.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserKeyedBroadcastProcess.class);
 	
 	private MapStateDescriptor<String, Config> configStateDescriptor;
 	
 	private MapStateDescriptor<String, Map<String, UserEventContainer>> userStateDescriptor;
 
-	public UserKeyedBroadcastProcessFunction(MapStateDescriptor<String, Config> configStateDescriptor, 
+	public UserKeyedBroadcastProcess(MapStateDescriptor<String, Config> configStateDescriptor, 
 			MapStateDescriptor<String, Map<String, UserEventContainer>> userStateDescriptor) {
 		this.configStateDescriptor = configStateDescriptor;
 		this.userStateDescriptor = userStateDescriptor;

@@ -10,7 +10,7 @@ import org.apache.flink.api.common.functions.GroupReduceFunction;
 import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.util.Collector;
 
-public class DataGroupReduceFunction implements GroupReduceFunction<DataInfo, Tuple3<String, String, String>> {
+public class DataGroupReduce implements GroupReduceFunction<DataInfo, Tuple3<String, String, String>> {
 
 	private static final long serialVersionUID = 1L;
 

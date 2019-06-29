@@ -52,10 +52,9 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <version>3.8.0</version>
         <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
+          <release>11</release>
         </configuration>
       </plugin>
       <plugin>
@@ -131,7 +130,7 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-java</artifactId>
-      <version>1.7.0</version>
+      <version>1.7.2</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -143,7 +142,7 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-streaming-java_2.12</artifactId>
-      <version>1.7.0</version>
+      <version>1.7.2</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -174,14 +173,12 @@
     </dependency>
   </dependencies>
   <properties>
-    <rocketmq.version>3.2.6</rocketmq.version>
-    <elasticsearch.version>6.3.2</elasticsearch.version>
-    <java.version>1.8</java.version>
     <scala.binary.version>2.12</scala.binary.version>
-    <flink.version>1.7.0</flink.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <elasticsearch.version>6.3.2</elasticsearch.version>
+    <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <flink.version>1.7.2</flink.version>
+    <rocketmq.version>3.2.6</rocketmq.version>
   </properties>
 </project>
 
