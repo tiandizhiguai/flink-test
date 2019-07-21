@@ -21,6 +21,12 @@ public class CountRichFlatMap extends RichFlatMapFunction<Tuple2<Long, Long>, Tu
 				"average",
 				TypeInformation.of(new TypeHint<Tuple2<Long, Long>>(){}));
 		
+//		StateTtlConfig ttlConfig = StateTtlConfig.newBuilder(Time.seconds(60))
+//				.setUpdateType(StateTtlConfig.UpdateType.OnCreateAndWrite)
+//				.cleanupFullSnapshot()
+//				.build();
+//		descriptor.enableTimeToLive(ttlConfig);
+		
 		sum = this.getRuntimeContext().getState(descriptor);
 	}
 

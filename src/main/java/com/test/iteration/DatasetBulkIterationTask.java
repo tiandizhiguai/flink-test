@@ -1,4 +1,4 @@
-package com.test;
+package com.test.iteration;
 
 import org.apache.flink.api.common.functions.MapFunction;
 import org.apache.flink.api.java.DataSet;
@@ -7,9 +7,9 @@ import org.apache.flink.api.java.operators.IterativeDataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FlinkTest {
+public class DatasetBulkIterationTask {
 
-	private static final Logger logger = LoggerFactory.getLogger(FlinkTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(DatasetBulkIterationTask.class);
 	
 	public static void main(String[] args) throws Exception {
 		ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();

@@ -13,8 +13,6 @@ public class AccountInfoTimestampExtractor extends BoundedOutOfOrdernessTimestam
 
 	private static final Logger logger = LoggerFactory.getLogger(AccountInfoTimestampExtractor.class);
 
-	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
 	public AccountInfoTimestampExtractor(Time maxOutOfOrderness) {
 		super(maxOutOfOrderness);
 	}
@@ -22,7 +20,7 @@ public class AccountInfoTimestampExtractor extends BoundedOutOfOrdernessTimestam
 	@Override
 	public long extractTimestamp(TransactionInfo element) {
 		try {
-			return format.parse(element.getTransactionDate()).getTime();
+			return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(element.getTransactionDate()).getTime();
 		} catch (Exception e) {
 			logger.error("failed to parse date, business no : " + element.getBusinessRecordNumber(), e);
 			return 0;
