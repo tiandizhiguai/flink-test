@@ -1,14 +1,17 @@
 package com.test.broadcast;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.common.state.MapStateDescriptor;
 import org.apache.flink.api.common.typeinfo.BasicTypeInfo;
 import org.apache.flink.api.common.typeinfo.TypeHint;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.java.typeutils.MapTypeInfo;
+import org.apache.flink.runtime.state.StateBackend;
 import org.apache.flink.runtime.state.memory.MemoryStateBackend;
 import org.apache.flink.streaming.api.CheckpointingMode;
 import org.apache.flink.streaming.api.TimeCharacteristic;
@@ -17,7 +20,6 @@ import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.CheckpointConfig.ExternalizedCheckpointCleanup;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.api.windowing.time.Time;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 
 /**
@@ -37,7 +39,8 @@ public class UserEventAnalyzer {
 
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-		env.setStateBackend(new MemoryStateBackend());
+		StateBackend stateBackend = new MemoryStateBackend();
+		env.setStateBackend(stateBackend);
 		CheckpointConfig checkpointConfig = env.getCheckpointConfig();
 		checkpointConfig.enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION);
 		checkpointConfig.setCheckpointingMode(CheckpointingMode.AT_LEAST_ONCE);
@@ -52,7 +55,9 @@ public class UserEventAnalyzer {
 		kafkaUserEventSource.setStartFromEarliest();
 		KeyedStream<UserEvent, String> customerUserEventStream = env.addSource(kafkaUserEventSource)
 			.map(new UserMap())
-			.assignTimestampsAndWatermarks(new UserWatermarkExtractor(Time.days(1000)))
+			.assignTimestampsAndWatermarks(WatermarkStrategy.<UserEvent>forBoundedOutOfOrderness(Duration.ofSeconds(1))
+					.withTimestampAssigner((event, timestamp) -> event.getEventTimestamp())
+					.withIdleness(Duration.ofSeconds(10)))
 			.keyBy(new UserKey());
 		
 		FlinkKafkaConsumer<String> kafkaConfigEventSource = new FlinkKafkaConsumer<>("input-config-topic", new SimpleStringSchema(), props);

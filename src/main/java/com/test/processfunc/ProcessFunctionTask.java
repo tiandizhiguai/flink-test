@@ -9,7 +9,7 @@ import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
 
-public class ProcessFunctionTest {
+public class ProcessFunctionTask {
 
 	public static void main(String[] args) {
 		// 定义源数据流

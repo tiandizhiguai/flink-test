@@ -1,14 +1,14 @@
 package com.test.broadcast;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.flink.shaded.curator.org.apache.curator.shaded.com.google.common.collect.Lists;
 
 public class UserEventContainer {
 
 	private String userId;
 
-	private List<UserEvent> userEvents = Lists.newArrayList();
+	private List<UserEvent> userEvents = new ArrayList<>();
 
 	public String getUserId() {
 		return userId;

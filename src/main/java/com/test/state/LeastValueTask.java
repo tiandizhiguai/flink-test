@@ -25,7 +25,7 @@ public class LeastValueTask {
 	public static void main(String[] args) throws Exception {
 		StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		env.fromElements(Tuple2.of(2, 2L), Tuple2.of(2, 1L), Tuple2.of(5, 1L), Tuple2.of(5, 2L), Tuple2.of(5, 3L))
-			.keyBy(0)
+			.keyBy(e -> e.f0)
 			.flatMap(new RichFlatMapFunction<Tuple2<Integer, Long>, Tuple2<Integer, Long>>() {
 
 				private static final long serialVersionUID = 1L;

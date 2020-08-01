@@ -9,7 +9,7 @@ public class SideOutputProcessFunction extends KeyedProcessFunction<String, Stri
 
 	private static final long serialVersionUID = 1L;
 	
-	private OutputTag<String> rejectedTag = null;
+	private OutputTag<String> rejectedTag;
 	
 	public SideOutputProcessFunction(OutputTag<String> rejectedTag) {
 		this.rejectedTag = rejectedTag;

@@ -20,7 +20,7 @@
                   <pluginExecutionFilter>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
-                    <versionRange>[3.0.0,)</versionRange>
+                    <versionRange>[3.1.1,)</versionRange>
                     <goals>
                       <goal>shade</goal>
                     </goals>
@@ -54,12 +54,12 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
-          <release>11</release>
+          <release>${java.version}</release>
         </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.1</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -72,7 +72,7 @@
                   <exclude>org.apache.flink:force-shading</exclude>
                   <exclude>com.google.code.findbugs:jsr305</exclude>
                   <exclude>org.slf4j:*</exclude>
-                  <exclude>log4j:*</exclude>
+                  <exclude>org.apache.logging.log4j:*</exclude>
                 </excludes>
               </artifactSet>
               <filters>
@@ -96,41 +96,11 @@
       </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-      <id>add-dependencies-for-IDEA</id>
-      <dependencies>
-        <dependency>
-          <groupId>org.apache.flink</groupId>
-          <artifactId>flink-java</artifactId>
-          <version>${flink.version}</version>
-          <scope>compile</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.flink</groupId>
-          <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
-          <version>${flink.version}</version>
-          <scope>compile</scope>
-        </dependency>
-      </dependencies>
-    </profile>
-  </profiles>
-  <repositories>
-    <repository>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots />
-      <id>apache.snapshots</id>
-      <name>Apache Development Snapshot Repository</name>
-      <url>https://repository.apache.org/content/repositories/snapshots/</url>
-    </repository>
-  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-java</artifactId>
-      <version>1.7.2</version>
+      <version>1.11.0</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -142,15 +112,11 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-streaming-java_2.12</artifactId>
-      <version>1.7.2</version>
+      <version>1.11.0</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
           <artifactId>flink-runtime_2.12</artifactId>
-          <groupId>org.apache.flink</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>flink-clients_2.12</artifactId>
           <groupId>org.apache.flink</groupId>
         </exclusion>
         <exclusion>
@@ -160,25 +126,103 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.7</version>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-clients_2.12</artifactId>
+      <version>1.11.0</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-optimizer_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-cli</artifactId>
+          <groupId>commons-cli</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-runtime_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table-api-java-bridge_2.12</artifactId>
+      <version>1.11.0</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-table-api-java</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-streaming-java_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table-planner-blink_2.12</artifactId>
+      <version>1.11.0</version>
+      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-table-api-scala_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-table-api-scala-bridge_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-table-runtime-blink_2.12</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>reflections</artifactId>
+          <groupId>org.reflections</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>flink-table-api-java</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flink</groupId>
+      <artifactId>flink-table-common</artifactId>
+      <version>1.11.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.12.1</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.12.1</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.12.1</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
   <properties>
     <scala.binary.version>2.12</scala.binary.version>
     <elasticsearch.version>6.3.2</elasticsearch.version>
-    <java.version>11</java.version>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <java.version>13</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <flink.version>1.7.2</flink.version>
+    <log4j.version>2.12.1</log4j.version>
+    <flink.version>1.11.0</flink.version>
     <rocketmq.version>3.2.6</rocketmq.version>
   </properties>
 </project>
-

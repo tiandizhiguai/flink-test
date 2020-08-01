@@ -13,6 +13,14 @@ import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.windowing.assigners.SlidingEventTimeWindows;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
+/**
+ * 
+* 实时统计热门top N商品。
+* 
+* @version V1.0
+* @Date 2019年12月12日 下午7:21:58
+* @since JDK 1.8
+ */
 public class HotItemsTask {
 
 	private static final String[] FIELDS = new String[] { "userId", "itemId", "categoryId", "behavior", "timestamp" };

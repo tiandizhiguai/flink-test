@@ -23,26 +23,16 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<flink.version>1.7.2</flink.version>
-		<java.version>11</java.version>
+		<flink.version>1.11.0</flink.version>
+		<java.version>13</java.version>
 		<scala.binary.version>2.12</scala.binary.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<log4j.version>2.12.1</log4j.version>
+
 		<rocketmq.version>3.2.6</rocketmq.version>
 		<elasticsearch.version>6.3.2</elasticsearch.version>
 	</properties>
-
-	<repositories>
-		<repository>
-			<id>apache.snapshots</id>
-			<name>Apache Development Snapshot Repository</name>
-			<url>https://repository.apache.org/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 	<dependencies>
 		<!-- Apache Flink dependencies -->
@@ -60,26 +50,55 @@
 			<version>${flink.version}</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<!-- Add connector dependencies here. They must be in the default scope 
-			(compile). -->
-
-		<!-- Example: <dependency> <groupId>org.apache.flink</groupId> <artifactId>flink-connector-kafka-0.10_${scala.binary.version}</artifactId> 
-			<version>${flink.version}</version> </dependency> -->
-
-		<!-- Add logging framework, to produce console output when running in the 
-			IDE. -->
-		<!-- These dependencies are excluded from the application JAR by default. -->
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.7</version>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-clients_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-table-api-java-bridge_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-table-planner-blink_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-table-common</artifactId>
+			<version>${flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -119,17 +138,17 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.flink</groupId>
-			<artifactId>flink-table_${scala.binary.version}</artifactId>
-			<version>${flink.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-scala_${scala.binary.version}</artifactId>
 			<version>${flink.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+			<version>${flink.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-kubernetes_${scala.binary.version}</artifactId>
 			<version>${flink.version}</version>
 		</dependency>
 
@@ -166,19 +185,28 @@
 			<artifactId>vertx-mysql-postgresql-client</artifactId>
 			<version>3.6.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.data-artisans.streamingledger</groupId>
-		  	<artifactId>da-streamingledger-sdk</artifactId>
-		  	<version>1.0.0</version>
+			<artifactId>da-streamingledger-sdk</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
-		  	<groupId>com.data-artisans.streamingledger</groupId>
-		  	<artifactId>da-streamingledger-runtime-serial</artifactId>
-		  	<version>1.0.0</version>
+			<groupId>com.data-artisans.streamingledger</groupId>
+			<artifactId>da-streamingledger-runtime-serial</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.clearspring.analytics</groupId>
+			<artifactId>stream</artifactId>
+			<version>2.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.roaringbitmap</groupId>
+			<artifactId>RoaringBitmap</artifactId>
+			<version>0.8.12</version>
 		</dependency>
 	</dependencies>
-
 
 	<build>
 		<plugins>
@@ -189,7 +217,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<release>11</release>
+					<release>${java.version}</release>
 				</configuration>
 			</plugin>
 
@@ -200,7 +228,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.1.1</version>
 				<executions>
 					<!-- Run shade goal on package phase -->
 					<execution>
@@ -214,7 +242,7 @@
 									<exclude>org.apache.flink:force-shading</exclude>
 									<exclude>com.google.code.findbugs:jsr305</exclude>
 									<exclude>org.slf4j:*</exclude>
-									<exclude>log4j:*</exclude>
+									<exclude>org.apache.logging.log4j:*</exclude>
 								</excludes>
 							</artifactSet>
 							<filters>
@@ -257,7 +285,7 @@
 									<pluginExecutionFilter>
 										<groupId>org.apache.maven.plugins</groupId>
 										<artifactId>maven-shade-plugin</artifactId>
-										<versionRange>[3.0.0,)</versionRange>
+										<versionRange>[3.1.1,)</versionRange>
 										<goals>
 											<goal>shade</goal>
 										</goals>
@@ -287,35 +315,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<!-- This profile helps to make things run out of the box in IntelliJ -->
-	<!-- Its adds Flink's core classes to the runtime class path. -->
-	<!-- Otherwise they are missing in IntelliJ, because the dependency is 'provided' -->
-	<profiles>
-		<profile>
-			<id>add-dependencies-for-IDEA</id>
-
-			<activation>
-				<property>
-					<name>idea.version</name>
-				</property>
-			</activation>
-
-			<dependencies>
-				<dependency>
-					<groupId>org.apache.flink</groupId>
-					<artifactId>flink-java</artifactId>
-					<version>${flink.version}</version>
-					<scope>compile</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.apache.flink</groupId>
-					<artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
-					<version>${flink.version}</version>
-					<scope>compile</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
-
 </project>
