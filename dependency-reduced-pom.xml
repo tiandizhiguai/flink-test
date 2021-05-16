@@ -100,47 +100,29 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-java</artifactId>
-      <version>1.11.0</version>
+      <version>1.12.0</version>
       <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>commons-math3</artifactId>
-          <groupId>org.apache.commons</groupId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-streaming-java_2.12</artifactId>
-      <version>1.11.0</version>
+      <version>1.12.0</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
-          <artifactId>flink-runtime_2.12</artifactId>
+          <artifactId>flink-file-sink-common</artifactId>
           <groupId>org.apache.flink</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-math3</artifactId>
-          <groupId>org.apache.commons</groupId>
         </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-clients_2.12</artifactId>
-      <version>1.11.0</version>
+      <version>1.12.0</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
           <artifactId>flink-optimizer_2.12</artifactId>
-          <groupId>org.apache.flink</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>commons-cli</artifactId>
-          <groupId>commons-cli</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>flink-runtime_2.12</artifactId>
           <groupId>org.apache.flink</groupId>
         </exclusion>
       </exclusions>
@@ -148,15 +130,11 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-api-java-bridge_2.12</artifactId>
-      <version>1.11.0</version>
+      <version>1.12.0</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
           <artifactId>flink-table-api-java</artifactId>
-          <groupId>org.apache.flink</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>flink-streaming-java_2.12</artifactId>
           <groupId>org.apache.flink</groupId>
         </exclusion>
       </exclusions>
@@ -164,7 +142,7 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-planner-blink_2.12</artifactId>
-      <version>1.11.0</version>
+      <version>1.12.0</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>
@@ -192,8 +170,14 @@
     <dependency>
       <groupId>org.apache.flink</groupId>
       <artifactId>flink-table-common</artifactId>
-      <version>1.11.0</version>
+      <version>1.12.0</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>flink-connector-files</artifactId>
+          <groupId>org.apache.flink</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
@@ -222,7 +206,7 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <log4j.version>2.12.1</log4j.version>
-    <flink.version>1.11.0</flink.version>
+    <flink.version>1.12.0</flink.version>
     <rocketmq.version>3.2.6</rocketmq.version>
   </properties>
 </project>

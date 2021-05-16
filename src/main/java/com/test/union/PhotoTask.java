@@ -1,6 +1,5 @@
-package com.test;
+package com.test.union;
 
-import org.apache.flink.api.common.RuntimeExecutionMode;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.api.java.tuple.Tuple3;
 import org.apache.flink.streaming.api.datastream.DataStream;
@@ -12,12 +11,12 @@ import org.apache.flink.streaming.api.windowing.time.Time;
  * 1分钟时间粒度的实时视频消费宽表（即宽表字段至少为：「photo_id + play_cnt + like_cnt
  *  + comment_cnt + share_cnt + negative_cnt + minute_timestamp」）产出至实时大屏。
  */
-public class FlinkTest {
+public class PhotoTask {
 
 	public static void main(String[] args) throws Exception {
 
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
-        env.setRuntimeMode(RuntimeExecutionMode.BATCH);
+
         // Tuple2<Long, String> -> photo_id + "PLAY"标签
         DataStream<Tuple2<Long, String>> play = env.fromElements(Tuple2.of(1L, "play"));
         // Tuple2<Long, String> -> photo_id + "LIKE"标签

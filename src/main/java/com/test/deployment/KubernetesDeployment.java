@@ -25,9 +25,8 @@ import org.apache.flink.kubernetes.kubeclient.FlinkKubeClient;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 
-public class KubernetesApplicationDeployment {
+public class KubernetesDeployment {
 	public static void main(String[] args) {
-		//1.配置
 		String flinkDistJar = "hdfs://data/flink/libs/flink-kubernetes_2.12-1.11.0.jar";
 		Configuration flinkConfiguration = GlobalConfiguration.loadConfiguration();
 		flinkConfiguration.set(DeploymentOptions.TARGET, KubernetesDeploymentTarget.APPLICATION.getName());
